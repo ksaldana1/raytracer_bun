@@ -1,3 +1,5 @@
+import { Vec3, clamp_color } from "./vec3";
+
 type Dimensions = [width: number, height: number];
 
 const buildPPM = (dimensions: Dimensions): string => {
@@ -13,12 +15,13 @@ ${width} ${height}
       return new Array(width)
         .fill(true)
         .map((_, columnIndex) => {
-          const [r, g, b] = [
+          const vec3 = new Vec3(
             columnIndex / (width - 1),
             rowIndex / (height - 1),
-            0,
-          ];
-          return `${r * 255.999} ${g * 255.999} ${b * 255.999}`;
+            0
+          );
+          const [r, g, b] = clamp_color(vec3).value;
+          return `${r} ${g} ${b}`;
         })
         .join(" ");
     })

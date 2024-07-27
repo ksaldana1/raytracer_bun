@@ -60,9 +60,9 @@ export class Vec3 {
 
 // Point3 is just an alias for Vec3, but useful for geometric clarity in the code.
 export type Point3 = Vec3;
+export const Point = Vec3;
 
 // Vector Utility Functions
-
 export function toString(v: Vec3): string {
   return `${v.value[0]} ${v.value[1]} ${v.value[2]}`;
 }
@@ -122,3 +122,19 @@ export function cross(u: Vec3, v: Vec3): Vec3 {
 export function unitVector(v: Vec3): Vec3 {
   return divide(v, v.length());
 }
+
+// Color utility functions
+export const Color = Vec3;
+export type Color = Vec3;
+
+export function clamp_color(vec3: Vec3): Color {
+  const [x, y, z] = vec3.value;
+  const [r, g, b] = [
+    Math.floor(255.999 * x),
+    Math.floor(255.999 * y),
+    Math.floor(255.999 * z),
+  ];
+  return new Vec3(r, g, b);
+}
+
+clamp_color(new Color(0.25, 0.5, 1));
